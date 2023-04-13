@@ -22,8 +22,8 @@ def parse_everything():
 
     dblp_path = "dblp.xml"
     save_path = "dblp.jsonl"
-    xquery = "//article"
-    dblp.parse_all(dblp_path, save_path, xquery=xquery)
+    # xquery = "//article"
+    dblp.parse_all(dblp_path, save_path)
 
 
 def parse_a_selectio_of_features():
