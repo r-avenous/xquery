@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>XQuery Interface</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+		}
+		form {
+			margin: 20px auto;
+			max-width: 600px;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		input[type="text"] {
+			border: 1px solid #ccc;
+			padding: 5px;
+			width: 100%;
+		}
+		input[type="submit"] {
+			background-color: #333;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-top: 20px;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 5px;
+			text-align: left;
+		}
+		th {
+			background-color: #333;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>XQuery Interface</h1>
+	</header>
+	<main>
+		<form action="#" method="post">
+			<label for="query">Enter XQuery:</label>
+			<input type="text" id="query" name="query" required>
+			<input type="submit" value="Execute">
+		</form>
+		<!-- <?php
+			if (isset($_POST['query'])) {
+				$query = $_POST['query'];
+				$xml = new DOMDocument;
+				$xml->load('data.xml');
+				$xsl = new DOMDocument;
+				$xsl->load('style.xsl');
+				$proc = new XSLTProcessor;
+				$proc->importStyleSheet($xsl);
+				$result = $proc->transformToXML($xml->documentElement, $query);
+				echo $result;
+			}
+		?> -->
+
+		<script>
+			const form = document.querySelector('form');
+			const resultDiv = document.querySelector('#result');
+
+			form.addEventListener('submit', (event) => {
+			event.preventDefault(); // prevent the form from submitting and reloading the page
+			
+			const xquery = document.querySelector('#xquery-input').value; // get the XQuery from the form input
+			
+			// make an AJAX request to execute the XQuery against your XML file
+			const xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+				const xmlResponse = xhr.responseXML;
+				// convert the XML response to HTML and display it in the result div
+				resultDiv.innerHTML = new XMLSerializer().serializeToString(xmlResponse);
+				}
+			}
+			xhr.open('POST', 'path/to/your/xml/file.xml', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send(`query=${encodeURIComponent(xquery)}`);
+			});
+
+		</script>
+	</main>
+</body>
+</html>
+
