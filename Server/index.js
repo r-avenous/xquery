@@ -96,16 +96,16 @@ app.get("/generateToken", async (req, res) => {
 
 	  
 });
-app.post("/runxquery", async (req, res) => {
-	const { query } = req.body; // assuming you're sending category and query in the request body
-	console.log("xquery", query);
 
-	// your xquery code here
 
-	const data = await service.xqueryData(query); // assuming this is the function that fetches data using xquery
+app.post('/runxquery', async (req, res) => {
+	const { query } = req.body;
+	console.log('xquery', query);
+
+	const data = await service.xqueryData(query);
+	
 	res.send(data);
 });
-
 
 
 
