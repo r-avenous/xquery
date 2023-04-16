@@ -98,19 +98,54 @@
    if(category=="Unstructured")
    
     { 
+
+      // data
+      // article
+      //book
       console.log("Unstructured");
-      const tags = input.match(/\w+="[^"]+"/g);
+     
 
-    // Construct the XQuery string
-    let query = 'XQuery //data[';
-    query += tags.map(tag => {
-      const [name, value] = tag.split('=');
-      return `${name} = "${value.replace(/"/g, '')}"`;
-    }).join(' and ');
-    query += ']';
+     let query = '';
+     if (input.includes('data')) {
+       // Extract the tag names and values from the input
+       const tags = input.match(/\w+="[^"]+"/g);
 
-    console.log(query); // XQuery //data[author = "Peggy Joy Lu" and title = "MI3." and year = "2022"]
-    input=query;
+       // Construct the XQuery string for data
+       query = 'XQuery //data[';
+       query += tags.map(tag => {
+         const [name, value] = tag.split('=');
+         return `${name} = "${value.replace(/"/g, '')}"`;
+       }).join(' and ');
+       query += ']';
+     } 
+     
+     else if (input.includes('book')) {
+       // Extract the tag names and values from the input
+       const tags = input.match(/\w+="[^"]+"/g);
+
+       // Construct the XQuery string for books
+       query = 'XQuery //book[';
+       query += tags.map(tag => {
+         const [name, value] = tag.split('=');
+         return `${name} = "${value.replace(/"/g, '')}"`;
+       }).join(' and ');
+       query += ']';
+     } else if (input.includes('article')) {
+       // Extract the tag names and values from the input
+       const tags = input.match(/\w+="[^"]+"/g);
+
+       // Construct the XQuery string for articles
+       query = 'XQuery //article[';
+       query += tags.map(tag => {
+         const [name, value] = tag.split('=');
+         return `${name} = "${value.replace(/"/g, '')}"`;
+       }).join(' and ');
+       query += ']';
+     }
+
+     console.log(query); // XQuery //article[author = "Peggy Joy Lu" and title = "MI3." and year = "2022"]
+input=query;
+
   }
 
 
@@ -133,23 +168,7 @@
       var data = await response.text();
       data = data.replace(/title/g, 'br');
 
-      // Replace the word "title" with "br"
-
-      // const tags = ['title', 'author', 'year', 'ee', 'url', 'pages', 'journal'];
-
-      // for (let i = 0; i < tags.length; i++) {
-      //   data = data.replace(new RegExp(tags[i], 'g'), 'br');
-      // }
-
-
-
-      // // Add bullet after every <br> tag and remove bullet after </br> tag
-
-      
-      // data = data.replace(/<(\w+)([^>]*)>/g, '<$1$2>&bull; ');
-
-      // data = data.replace(/<\/br>&bull;/g, '</br>');
-
+   
 
 
 
