@@ -39,27 +39,41 @@ async function xqueryData(query) {
 
     var t0 = new Date();
     client.execute("open database_test", print);
-xqeuryGot=query;
-console.log(xqeuryGot);
-    const result = await new Promise((resolve, reject) => {
-        client.execute(xqeuryGot , (err, reply) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(reply.result);
-            }
-            print(err, reply);
+
+    xqeuryGot = query;
+    console.log(xqeuryGot);
+    try {
+        const result = await new Promise((resolve, reject) => {
+            client.execute(xqeuryGot, (err, reply) => {
+                if (err) {
+                    console.log("Error: " + err);
+                    resolve(""); // Return empty string if XQuery fails to execute
+                } else {
+                    resolve(reply.result);
+                }
+                print(err, reply);
+            });
         });
-    });
 
-    client.close(function () {
-        var t2 = new Date();
-        console.log("Closed in ", t2 - t0, " milliseconds.");
-    });
-    var t1 = new Date();
-    console.log("Commands send in ", t1 - t0, " milliseconds.");
+        client.close(function () {
+            var t2 = new Date();
+            console.log("Closed in ", t2 - t0, " milliseconds.");
+        });
+        var t1 = new Date();
+        console.log("Commands sent in ", t1 - t0, " milliseconds.");
+        if (result == "") {
+            return "No results found.";
+        }
+        return result;
+    } catch (error) {
+        console.log("Error occurred while executing XQuery: ", error);
+        client.close(function () {
+            var t2 = new Date();
+            console.log("Closed in ", t2 - t0, " milliseconds.");
+        });
+        throw error;
+    }
 
-    return result;
 }
 
 
