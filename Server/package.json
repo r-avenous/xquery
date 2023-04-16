@@ -1,0 +1,56 @@
+{
+  "name": "resume-parser",
+  "version": "1.1.1",
+  "description": "A Simple NodeJs library to parse Resume / CV to JSON.",
+  "main": "index.js",
+  "author": "Parminder Klair",
+  "contributors": [
+    "Petar Petrov (https://github.com/Mihaylov93)"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perminder-klair/resume-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/perminder-klair/resume-parser/issues"
+  },
+  "homepage": "https://github.com/perminder-klair/resume-parser",
+  "keywords": [
+    "resume",
+    "cv",
+    "parser",
+    "resume parser",
+    "cv parser"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js",
+    "lint": "prettier --single-quote --trailing-comma es5 --write test.js src/*.js src/**/*.js src/**/**/*.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1277.0",
+    "axios": "^1.2.1",
+    "basex": "^1.0.1",
+    "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^3.1.0",
+    "pdf-parse": "^1.1.1",
+    "request": "^2.83.0",
+    "textract": "^2.5.0",
+    "tracer": "^0.8.11",
+    "underscore": "^1.8.3",
+    "util": "^0.12.5",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "prettier": "1.10.2"
+  }
+}
