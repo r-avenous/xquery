@@ -39,7 +39,7 @@ async function xqueryData(query) {
 
     var t0 = new Date();
     client.execute("open database_test", print);
-xqeuryGot="Xquery "+query+ " ";
+xqeuryGot=query;
 console.log(xqeuryGot);
     const result = await new Promise((resolve, reject) => {
         client.execute(xqeuryGot , (err, reply) => {
