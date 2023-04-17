@@ -166,7 +166,7 @@ input=query;
       const response = await fetch(url, options);
 
       var data = await response.text();
-      data = data.replace(/title/g, 'br');
+      data = data.replace(/<\/.*?>/g, '<br>').replace(/<(?!br>)/g, '<br>* ').replace(/(?<!br)>/g, ': ');
 
    
 
