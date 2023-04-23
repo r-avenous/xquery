@@ -94,58 +94,55 @@
    
     var input = document.querySelector('input.form-control').value;
     
-   
-   if(category=="Unstructured")
-   
-    { 
+    
+  if (category == "Unstructured") {
+    // Types of data to query
+    const dataTypes = [
+      'data',
+      'book',
+      'article',
+      'inproceedings',
+      'conference',
+      'phdthesis',
+      'mastersthesis',
+      'incollection',
+      'proceedings',
+      'booklet',
+      'manual',
+      'techreport'
+    ];
 
-      // data
-      // article
-      //book
-      console.log("Unstructured");
-     
+    // Check if the input string includes a keyword search
+    if (input.includes("keyword=")) {
+      const keyword = input.split("keyword=")[1].trim();
 
-     let query = '';
-     if (input.includes('data')) {
-       // Extract the tag names and values from the input
-       const tags = input.match(/\w+="[^"]+"/g);
+      // Construct XQuery string to search for the keyword in all book titles
+      const query = `FIND ${keyword}`;
+      console.log(query);
+      input = query;
+    } else {
+      // Construct XQuery string for each data type
+      let query = '';
+      for (const dataType of dataTypes) {
+        if (input.includes(dataType)) {
+          // Extract the tag names and values from the input
+          const tags = input.match(/\w+="[^"]+"/g);
+          query += `XQuery //${dataType}[`;
+          query += tags.map(tag => {
+            const [name, value] = tag.split('=');
+            return `${name} = "${value.replace(/"/g, '')}"`;
+          }).join(' and ');
+          query += '] | ';
+        }
+      }
 
-       // Construct the XQuery string for data
-       query = 'XQuery //data[';
-       query += tags.map(tag => {
-         const [name, value] = tag.split('=');
-         return `${name} = "${value.replace(/"/g, '')}"`;
-       }).join(' and ');
-       query += ']';
-     } 
-     
-     else if (input.includes('book')) {
-       // Extract the tag names and values from the input
-       const tags = input.match(/\w+="[^"]+"/g);
-
-       // Construct the XQuery string for books
-       query = 'XQuery //book[';
-       query += tags.map(tag => {
-         const [name, value] = tag.split('=');
-         return `${name} = "${value.replace(/"/g, '')}"`;
-       }).join(' and ');
-       query += ']';
-     } else if (input.includes('article')) {
-       // Extract the tag names and values from the input
-       const tags = input.match(/\w+="[^"]+"/g);
-
-       // Construct the XQuery string for articles
-       query = 'XQuery //article[';
-       query += tags.map(tag => {
-         const [name, value] = tag.split('=');
-         return `${name} = "${value.replace(/"/g, '')}"`;
-       }).join(' and ');
-       query += ']';
-     }
-
-     console.log(query); // XQuery //article[author = "Peggy Joy Lu" and title = "MI3." and year = "2022"]
-input=query;
-
+      // Remove the last ' | ' separator and add XQuery prefix
+      if (query) {
+        query = `XQuery (${query.slice(0, -3)})`;
+        console.log(query);
+        input = query;
+      }
+    }
   }
 
 
